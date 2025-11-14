@@ -11,10 +11,9 @@
             theme: {
                 extend: {
                     colors: {
-                        // Paleta principal: 3 tonos azulados
-                        'primary-light': '#dbeafe',  // Azul muy claro
-                        'primary': '#3b82f6',         // Azul medio
-                        'primary-dark': '#1e40af',    // Azul oscuro
+                        'primary-light': '#dbeafe',
+                        'primary': '#3b82f6',
+                        'primary-dark': '#1e40af',
                     }
                 }
             }
@@ -31,11 +30,20 @@
             left: 0;
             right: 0;
             z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
         }
         
         .content-section {
             min-height: 100vh;
             padding-top: 80px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-section {
+                padding-top: 60px;
+                min-height: auto;
+            }
         }
         
         .content-box {
@@ -45,35 +53,8 @@
             justify-content: center;
             font-weight: 600;
             color: #1e40af;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border: 1px solid #93c5fd;
-        }
-        
-        .logo-box {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .image-placeholder {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            border: 2px solid #93c5fd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #1e40af;
-            font-weight: 600;
-        }
-        
-        .text-placeholder {
-            background: white;
-            border-left: 4px solid #3b82f6;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #93c5fd;
         }
         
         .nav-link {
@@ -82,6 +63,7 @@
         
         .nav-link:hover {
             background: #dbeafe;
+            transform: translateY(-2px);
         }
         
         .nav-link.active {
@@ -93,24 +75,27 @@
             width: 160px;
             height: 160px;
             border-radius: 50%;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             border: 4px solid #93c5fd;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        /* Bordes individuales para cada integrante */
-        .border-blue-light {
-            border-color: #93c5fd !important;
+        .photo-circle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 35px -5px rgba(59, 130, 246, 0.3);
         }
         
-        .border-blue-medium {
-            border-color: #60a5fa !important;
+        @media (max-width: 768px) {
+            .photo-circle {
+                width: 120px;
+                height: 120px;
+            }
         }
         
-        .border-blue-dark {
-            border-color: #3b82f6 !important;
-        }
+        .border-blue-light { border-color: #93c5fd !important; }
+        .border-blue-medium { border-color: #60a5fa !important; }
+        .border-blue-dark { border-color: #3b82f6 !important; }
         
-        /* Estilos para referencias colapsables */
         .referencias-ocultas {
             max-height: 0;
             overflow: hidden;
@@ -118,7 +103,7 @@
         }
         
         .referencias-ocultas.mostrar {
-            max-height: 2500px;
+            max-height: 3000px;
             transition: max-height 0.8s ease-in;
         }
         
@@ -128,7 +113,7 @@
         
         .btn-ver-mas:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
         }
         
         .rotate-180 {
@@ -138,37 +123,121 @@
         .transition-transform {
             transition: transform 0.3s ease;
         }
+        
+        /* Animaciones suaves */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #1e40af;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+        }
+        
+        /* Mejoras visuales adicionales */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
     
-    <!-- NAV BAR FIJO SIMPLIFICADO -->
-    <nav class="nav-fixed bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-6 py-4">
+    <!-- NAV BAR RESPONSIVE -->
+    <nav class="nav-fixed shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
             <div class="flex items-center justify-between">
                 <!-- Logo UDES -->
-                <div class="flex items-center gap-3">
-                    <img src="med.png" alt="Logo Medicina UDES" class="h-12 w-12 rounded-full object-cover">
-                    <div class="content-box h-8 w-32 rounded text-sm">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <img src="med.png" alt="Logo Medicina UDES" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover">
+                    <div class="content-box h-7 w-24 sm:h-8 sm:w-32 rounded text-xs sm:text-sm">
                         UDES Cúcuta
                     </div>
                 </div>
                 
+                <!-- Hamburger Menu -->
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
                 <!-- Links de Navegación -->
-                <div class="flex gap-4">
-                    <a href="#inicio" class="nav-link px-5 py-2 rounded-lg font-semibold text-gray-700">
+                <div class="nav-links hidden md:flex gap-2 lg:gap-4">
+                    <a href="#inicio" class="nav-link px-3 lg:px-5 py-2 rounded-lg font-semibold text-gray-700 text-sm lg:text-base">
                         Inicio
                     </a>
-                    <a href="#integrantes" class="nav-link px-5 py-2 rounded-lg font-semibold text-gray-700">
+                    <a href="#integrantes" class="nav-link px-3 lg:px-5 py-2 rounded-lg font-semibold text-gray-700 text-sm lg:text-base">
                         Integrantes
                     </a>
-                    <a href="#informacion" class="nav-link px-5 py-2 rounded-lg font-semibold text-gray-700">
+                    <a href="#informacion" class="nav-link px-3 lg:px-5 py-2 rounded-lg font-semibold text-gray-700 text-sm lg:text-base">
                         Información
                     </a>
-                    <a href="#graficas" class="nav-link px-5 py-2 rounded-lg font-semibold text-gray-700">
+                    <a href="#graficas" class="nav-link px-3 lg:px-5 py-2 rounded-lg font-semibold text-gray-700 text-sm lg:text-base">
                         Datos
                     </a>
-                    <a href="#bibliografia" class="nav-link px-5 py-2 rounded-lg font-semibold text-gray-700">
+                    <a href="#bibliografia" class="nav-link px-3 lg:px-5 py-2 rounded-lg font-semibold text-gray-700 text-sm lg:text-base">
                         Referencias
                     </a>
                 </div>
@@ -178,81 +247,81 @@
 
     <!-- SECCIÓN INICIO/HERO -->
     <section id="inicio" class="content-section bg-gradient-to-b from-blue-50 to-white">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center justify-center h-screen">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center min-h-screen py-10">
             
-            <!-- Título Principal estilizado -->
-            <div class="text-center mb-8">
-                <h1 class="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                    Análisis del nivel de burnout<br>
+            <!-- Título Principal -->
+            <div class="text-center mb-6 sm:mb-8 fade-in">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-4">
+                    Análisis del nivel de burnout<br class="hidden sm:block">
                     y probabilidad de repitencia académica
                 </h1>
-                <div class="w-32 h-1 bg-blue-500 mx-auto mb-6"></div>
-                <p class="text-2xl text-gray-600 font-light leading-relaxed">
-                    en estudiantes de sexto semestre de Medicina<br>
+                <div class="w-24 sm:w-32 h-1 bg-blue-500 mx-auto mb-4 sm:mb-6"></div>
+                <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 font-light leading-relaxed px-4">
+                    en estudiantes de sexto semestre de Medicina<br class="hidden sm:block">
                     de la Universidad de Santander, sede Cúcuta
                 </p>
             </div>
             
             <!-- Año -->
-            <div class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold mb-8">
+            <div class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold mb-6 sm:mb-8 text-sm sm:text-base">
                 2025
             </div>
             
             <!-- Imagen ilustrativa -->
-            <div class="w-full max-w-3xl rounded-xl overflow-hidden shadow-2xl">
+            <div class="w-full max-w-3xl rounded-xl overflow-hidden shadow-2xl px-4">
                 <img src="ilustracion.jpeg" alt="Ilustración del burnout en profesionales de salud" class="w-full h-auto object-cover">
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN INTEGRANTES (NUEVA) -->
+    <!-- SECCIÓN INTEGRANTES -->
     <section id="integrantes" class="content-section bg-white">
-        <div class="max-w-6xl mx-auto px-6 py-20">
-            <!-- Título de Sección -->
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <!-- Título -->
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-3 sm:mb-4">
                 Integrantes del Proyecto
             </h2>
-            <p class="text-center text-gray-600 mb-16">
+            <p class="text-center text-gray-600 mb-10 sm:mb-16 text-sm sm:text-base">
                 Estudiantes de Medicina - Universidad de Santander
             </p>
             
-            <!-- Grid de Integrantes -->
-            <div class="grid grid-cols-3 gap-12">
+            <!-- Grid Responsive de Integrantes -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
                 <!-- Integrante 1 -->
-                <div class="flex flex-col items-center">
-                    <div class="photo-circle border-blue-light mb-6 overflow-hidden">
+                <div class="flex flex-col items-center card-hover">
+                    <div class="photo-circle border-blue-light mb-4 sm:mb-6 overflow-hidden">
                         <img src="sebastian.jpg" alt="Sebastián Andrés Rojas Rodríguez" class="w-full h-full object-cover">
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800 text-center mb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-800 text-center mb-2">
                         Brayan Julián<br>Usuga Rivera
                     </h3>
-                    <div class="bg-blue-50 border border-blue-300 px-6 py-2 rounded-lg text-sm text-blue-900 font-medium">
+                    <div class="bg-blue-50 border border-blue-300 px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm text-blue-900 font-medium">
                         Estudiante de Medicina
                     </div>
                 </div>
                 
                 <!-- Integrante 2 -->
-                <div class="flex flex-col items-center">
-                    <div class="photo-circle border-blue-medium mb-6 overflow-hidden">
+                <div class="flex flex-col items-center card-hover">
+                    <div class="photo-circle border-blue-medium mb-4 sm:mb-6 overflow-hidden">
                         <img src="oscar.jpg" alt="Óscar José Peñaranda Suárez" class="w-full h-full object-cover">
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800 text-center mb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-800 text-center mb-2">
                         Óscar José<br>Peñaranda Suárez
                     </h3>
-                    <div class="bg-blue-100 border border-blue-400 px-6 py-2 rounded-lg text-sm text-blue-900 font-medium">
+                    <div class="bg-blue-100 border border-blue-400 px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm text-blue-900 font-medium">
                         Estudiante de Medicina
                     </div>
                 </div>
                 
                 <!-- Integrante 3 -->
-                <div class="flex flex-col items-center">
-                    <div class="photo-circle border-blue-dark mb-6 overflow-hidden">
+                <div class="flex flex-col items-center card-hover sm:col-span-2 lg:col-span-1">
+                    <div class="photo-circle border-blue-dark mb-4 sm:mb-6 overflow-hidden">
                         <img src="brayan.jpg" alt="Brayan Julián Usuga Rivera" class="w-full h-full object-cover">
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800 text-center mb-2">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-800 text-center mb-2">
                         Sebastián Andrés<br>Rojas Rodríguez
                     </h3>
-                    <div class="bg-blue-200 border border-blue-500 px-6 py-2 rounded-lg text-sm text-blue-900 font-medium">
+                    <div class="bg-blue-200 border border-blue-500 px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm text-blue-900 font-medium">
                         Estudiante de Medicina
                     </div>
                 </div>
@@ -262,54 +331,54 @@
 
     <!-- SECCIÓN INFORMACIÓN -->
     <section id="informacion" class="content-section bg-gray-50">
-        <div class="max-w-6xl mx-auto px-6 py-20">
-            <!-- Título de Sección -->
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <!-- Título -->
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-3 sm:mb-4">
                 Información del Proyecto
             </h2>
-            <p class="text-center text-gray-600 mb-16">
+            <p class="text-center text-gray-600 mb-10 sm:mb-16 text-sm sm:text-base">
                 Planteamiento del problema y marco conceptual
             </p>
             
             <!-- Pregunta de Investigación -->
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg mb-12">
-                <h3 class="text-lg font-bold text-gray-800 mb-3">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-r-lg mb-8 sm:mb-12 card-hover">
+                <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3">
                     Pregunta de Investigación
                 </h3>
-                <p class="text-gray-700 leading-relaxed text-lg">
+                <p class="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">
                     ¿Cuál es el nivel de burnout y su relación con la probabilidad de repitencia académica en estudiantes de sexto semestre del programa de Medicina de la UDES, sede Cúcuta, durante el año 2025?
                 </p>
             </div>
             
-            <!-- Grid de Contenido -->
-            <div class="grid grid-cols-2 gap-8 mb-12">
+            <!-- Grid de Contenido Responsive -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
                 <!-- Columna Izquierda -->
                 <div class="space-y-6">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <div class="card-hover">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3">
                             Planteamiento del Problema
                         </h3>
-                        <div class="text-placeholder rounded-lg">
-                            <p class="text-sm text-gray-700 leading-relaxed">
+                        <div class="bg-white border-l-4 border-blue-500 p-4 rounded-lg shadow-sm">
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
                                 <strong>Definición según Maslach y Jackson:</strong> Estado de agotamiento emocional, 
                                 despersonalización y disminución de la realización personal que surge cuando las 
                                 demandas del entorno superan los recursos personales para afrontarlas.
                             </p>
-                            <p class="text-sm text-gray-700 mt-3 leading-relaxed">
+                            <p class="text-xs sm:text-sm text-gray-700 mt-3 leading-relaxed">
                                 Afecta el bienestar emocional, funcionamiento cognitivo, social y físico del estudiante.
                             </p>
                         </div>
                     </div>
                     
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <div class="card-hover">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3">
                             Contexto Local
                         </h3>
                         <div class="bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-500 p-4 rounded-lg shadow-sm">
-                            <p class="text-sm text-gray-700 leading-relaxed">
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
                                 <strong>Estudios previos en UDES Cúcuta:</strong>
                             </p>
-                            <ul class="text-sm text-gray-700 mt-2 space-y-1 ml-4">
+                            <ul class="text-xs sm:text-sm text-gray-700 mt-2 space-y-1 ml-4">
                                 <li>• Niveles significativos de ansiedad</li>
                                 <li>• Alteraciones del sueño y síntomas depresivos</li>
                                 <li>• Impacto en salud mental y rendimiento</li>
@@ -320,34 +389,34 @@
                 
                 <!-- Columna Derecha -->
                 <div class="space-y-6">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <div class="card-hover">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3">
                             Dimensiones del MBI-SS
                         </h3>
-                        <div class="bg-white rounded-lg p-6 shadow-md border border-gray-200">
+                        <div class="bg-white rounded-lg p-4 sm:p-6 shadow-md border border-gray-200">
                             <div class="space-y-4">
                                 <div class="border-l-4 border-blue-600 pl-4 py-2 bg-blue-50 rounded-r">
-                                    <div class="font-semibold text-gray-800 mb-1">1. Agotamiento Emocional</div>
-                                    <div class="text-sm text-gray-600">Cansancio extremo y falta de energía</div>
+                                    <div class="font-semibold text-gray-800 mb-1 text-sm sm:text-base">1. Agotamiento Emocional</div>
+                                    <div class="text-xs sm:text-sm text-gray-600">Cansancio extremo y falta de energía</div>
                                 </div>
                                 <div class="border-l-4 border-blue-500 pl-4 py-2 bg-blue-50 rounded-r">
-                                    <div class="font-semibold text-gray-800 mb-1">2. Despersonalización</div>
-                                    <div class="text-sm text-gray-600">Actitudes frías y distantes</div>
+                                    <div class="font-semibold text-gray-800 mb-1 text-sm sm:text-base">2. Despersonalización</div>
+                                    <div class="text-xs sm:text-sm text-gray-600">Actitudes frías y distantes</div>
                                 </div>
                                 <div class="border-l-4 border-blue-400 pl-4 py-2 bg-blue-50 rounded-r">
-                                    <div class="font-semibold text-gray-800 mb-1">3. Baja Realización Personal</div>
-                                    <div class="text-sm text-gray-600">Percepción de ineficacia</div>
+                                    <div class="font-semibold text-gray-800 mb-1 text-sm sm:text-base">3. Baja Realización Personal</div>
+                                    <div class="text-xs sm:text-sm text-gray-600">Percepción de ineficacia</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    <div class="card-hover">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-3">
                             Justificación
                         </h3>
                         <div class="bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-600 p-4 rounded-lg shadow-sm">
-                            <p class="text-sm text-gray-700 leading-relaxed">
+                            <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
                                 <strong>Importancia del estudio:</strong> Académica, humana y social. 
                                 Los futuros profesionales de salud requieren bienestar emocional para 
                                 un ejercicio médico de calidad.
@@ -357,30 +426,30 @@
                 </div>
             </div>
             
-            <!-- Tarjetas de Relevancia -->
-            <div class="grid grid-cols-4 gap-6">
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-3">🌍</div>
-                    <div class="font-bold text-gray-800 mb-2">Internacional</div>
-                    <div class="text-sm text-gray-700">Estudios en Harvard, Lausana, Lima</div>
+            <!-- Tarjetas de Relevancia Responsive -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4 sm:p-6 shadow-md text-center card-hover">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🌍</div>
+                    <div class="font-bold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Internacional</div>
+                    <div class="text-xs sm:text-sm text-gray-700">Estudios en Harvard, Lausana, Lima</div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-300 rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-3">🇨🇴</div>
-                    <div class="font-bold text-gray-800 mb-2">Nacional</div>
-                    <div class="text-sm text-gray-700">U. Nacional, CES, Manizales</div>
+                <div class="bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-300 rounded-lg p-4 sm:p-6 shadow-md text-center card-hover">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🇨🇴</div>
+                    <div class="font-bold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Nacional</div>
+                    <div class="text-xs sm:text-sm text-gray-700">U. Nacional, CES, Manizales</div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-blue-200 to-blue-300 border border-blue-400 rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-3">🏥</div>
-                    <div class="font-bold text-gray-800 mb-2">Regional</div>
-                    <div class="text-sm text-gray-700">UDES Cúcuta</div>
+                <div class="bg-gradient-to-br from-blue-200 to-blue-300 border border-blue-400 rounded-lg p-4 sm:p-6 shadow-md text-center card-hover">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🏥</div>
+                    <div class="font-bold text-gray-800 mb-1 sm:mb-2 text-sm sm:text-base">Regional</div>
+                    <div class="text-xs sm:text-sm text-gray-700">UDES Cúcuta</div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-blue-300 to-blue-400 border border-blue-500 rounded-lg p-6 shadow-md text-center hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-3">📚</div>
-                    <div class="font-bold text-white mb-2">6° Semestre</div>
-                    <div class="text-sm text-white">Etapa crítica</div>
+                <div class="bg-gradient-to-br from-blue-300 to-blue-400 border border-blue-500 rounded-lg p-4 sm:p-6 shadow-md text-center card-hover col-span-2 lg:col-span-1">
+                    <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">📚</div>
+                    <div class="font-bold text-white mb-1 sm:mb-2 text-sm sm:text-base">6° Semestre</div>
+                    <div class="text-xs sm:text-sm text-white">Etapa crítica</div>
                 </div>
             </div>
         </div>
@@ -388,44 +457,44 @@
 
     <!-- SECCIÓN DATOS/GRÁFICAS -->
     <section id="graficas" class="content-section bg-white">
-        <div class="max-w-6xl mx-auto px-6 py-20">
-            <!-- Título de Sección -->
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <!-- Título -->
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-3 sm:mb-4">
                 Datos y Resultados
             </h2>
-            <p class="text-center text-gray-600 mb-4">
+            <p class="text-center text-gray-600 mb-2 sm:mb-4 text-sm sm:text-base">
                 Análisis estadístico del síndrome de burnout
             </p>
-            <p class="text-center text-sm text-gray-500 mb-12">
+            <p class="text-center text-xs sm:text-sm text-gray-500 mb-8 sm:mb-12">
                 *Gráficas ilustrativas con datos de ejemplo
             </p>
             
             <!-- Gráfica Principal: Prevalencia -->
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-8 mb-6 sm:mb-8 card-hover">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">
                     📊 Prevalencia del Síndrome de Burnout
                 </h3>
-                <div class="grid grid-cols-2 gap-8">
-                    <div style="position: relative; height: 350px;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                    <div style="position: relative; height: 250px;" class="sm:h-auto">
                         <canvas id="prevalenciaChart"></canvas>
                     </div>
                     <div class="flex items-center">
                         <div class="space-y-4 w-full">
-                            <div class="bg-red-50 border border-red-200 p-4 rounded-lg">
+                            <div class="bg-red-50 border border-red-200 p-3 sm:p-4 rounded-lg">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-semibold text-gray-800">Con Burnout</span>
-                                    <span class="text-3xl font-bold text-red-600">58%</span>
+                                    <span class="font-semibold text-gray-800 text-sm sm:text-base">Con Burnout</span>
+                                    <span class="text-2xl sm:text-3xl font-bold text-red-600">58%</span>
                                 </div>
-                                <p class="text-sm text-gray-600 mt-2">
+                                <p class="text-xs sm:text-sm text-gray-600 mt-2">
                                     Estudiantes que presentan el síndrome
                                 </p>
                             </div>
-                            <div class="bg-green-50 border border-green-200 p-4 rounded-lg">
+                            <div class="bg-green-50 border border-green-200 p-3 sm:p-4 rounded-lg">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-semibold text-gray-800">Sin Burnout</span>
-                                    <span class="text-3xl font-bold text-green-600">42%</span>
+                                    <span class="font-semibold text-gray-800 text-sm sm:text-base">Sin Burnout</span>
+                                    <span class="text-2xl sm:text-3xl font-bold text-green-600">42%</span>
                                 </div>
-                                <p class="text-sm text-gray-600 mt-2">
+                                <p class="text-xs sm:text-sm text-gray-600 mt-2">
                                     Estudiantes sin el síndrome
                                 </p>
                             </div>
@@ -434,40 +503,40 @@
                 </div>
             </div>
             
-            <!-- Gráfica Dimensiones del MBI-SS -->
-            <div class="bg-gray-50 rounded-lg shadow-lg p-8 mb-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">
+            <!-- Gráfica Dimensiones -->
+            <div class="bg-gray-50 rounded-lg shadow-lg p-4 sm:p-8 mb-6 sm:mb-8 card-hover">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">
                     📈 Dimensiones del Síndrome de Burnout (MBI-SS)
                 </h3>
-                <div style="position: relative; height: 350px;">
+                <div style="position: relative; height: 250px;" class="sm:h-auto">
                     <canvas id="dimensionesChart"></canvas>
                 </div>
-                <div class="grid grid-cols-3 gap-4 mt-6">
-                    <div class="bg-white p-4 rounded-lg text-center shadow-sm border border-red-200">
-                        <div class="text-3xl font-bold text-red-600">68%</div>
-                        <div class="text-sm text-gray-700 mt-1">Agotamiento Emocional Alto</div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                    <div class="bg-white p-3 sm:p-4 rounded-lg text-center shadow-sm border border-red-200">
+                        <div class="text-2xl sm:text-3xl font-bold text-red-600">68%</div>
+                        <div class="text-xs sm:text-sm text-gray-700 mt-1">Agotamiento Emocional Alto</div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg text-center shadow-sm border border-orange-200">
-                        <div class="text-3xl font-bold text-orange-600">45%</div>
-                        <div class="text-sm text-gray-700 mt-1">Despersonalización Alta</div>
+                    <div class="bg-white p-3 sm:p-4 rounded-lg text-center shadow-sm border border-orange-200">
+                        <div class="text-2xl sm:text-3xl font-bold text-orange-600">45%</div>
+                        <div class="text-xs sm:text-sm text-gray-700 mt-1">Despersonalización Alta</div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg text-center shadow-sm border border-blue-200">
-                        <div class="text-3xl font-bold text-blue-600">52%</div>
-                        <div class="text-sm text-gray-700 mt-1">Baja Realización Personal</div>
+                    <div class="bg-white p-3 sm:p-4 rounded-lg text-center shadow-sm border border-blue-200">
+                        <div class="text-2xl sm:text-3xl font-bold text-blue-600">52%</div>
+                        <div class="text-xs sm:text-sm text-gray-700 mt-1">Baja Realización Personal</div>
                     </div>
                 </div>
             </div>
             
-            <!-- Gráfica Relación con Repitencia -->
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">
+            <!-- Gráfica Repitencia -->
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-8 mb-6 sm:mb-8 card-hover">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">
                     📉 Relación entre Burnout y Repitencia Académica
                 </h3>
-                <div style="position: relative; height: 350px;">
+                <div style="position: relative; height: 250px;" class="sm:h-auto">
                     <canvas id="repitenciaChart"></canvas>
                 </div>
-                <div class="bg-blue-50 p-4 rounded-lg mt-6 border border-blue-200">
-                    <p class="text-sm text-gray-700">
+                <div class="bg-blue-50 p-3 sm:p-4 rounded-lg mt-4 sm:mt-6 border border-blue-200">
+                    <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
                         <strong>Hallazgo clave:</strong> Los estudiantes con Síndrome de Burnout presentan 
                         una tasa de repitencia <strong>3.5 veces mayor</strong> que aquellos sin el síndrome 
                         (35% vs 10%).
@@ -475,26 +544,26 @@
                 </div>
             </div>
             
-            <!-- Métricas Destacadas -->
-            <div class="grid grid-cols-4 gap-6">
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg flex-col text-center shadow-sm border border-blue-200">
-                    <div class="text-4xl font-bold text-blue-600">58%</div>
-                    <div class="text-sm mt-2 text-gray-700">Prevalencia<br>de Burnout</div>
+            <!-- Métricas Destacadas Responsive -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 sm:p-6 rounded-lg text-center shadow-sm border border-blue-200 card-hover">
+                    <div class="text-3xl sm:text-4xl font-bold text-blue-600">58%</div>
+                    <div class="text-xs sm:text-sm mt-2 text-gray-700">Prevalencia<br>de Burnout</div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-lg flex-col text-center shadow-sm border border-red-200">
-                    <div class="text-4xl font-bold text-red-600">68%</div>
-                    <div class="text-sm mt-2 text-gray-700">Agotamiento<br>Emocional Alto</div>
+                <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 sm:p-6 rounded-lg text-center shadow-sm border border-red-200 card-hover">
+                    <div class="text-3xl sm:text-4xl font-bold text-red-600">68%</div>
+                    <div class="text-xs sm:text-sm mt-2 text-gray-700">Agotamiento<br>Emocional Alto</div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg flex-col text-center shadow-sm border border-orange-200">
-                    <div class="text-4xl font-bold text-orange-600">45%</div>
-                    <div class="text-sm mt-2 text-gray-700">Despersona-<br>lización Alta</div>
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 sm:p-6 rounded-lg text-center shadow-sm border border-orange-200 card-hover">
+                    <div class="text-3xl sm:text-4xl font-bold text-orange-600">45%</div>
+                    <div class="text-xs sm:text-sm mt-2 text-gray-700">Despersona-<br>lización Alta</div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg flex-col text-center shadow-sm border border-purple-200">
-                    <div class="text-4xl font-bold text-purple-600">3.5x</div>
-                    <div class="text-sm mt-2 text-gray-700">Mayor riesgo<br>de repitencia</div>
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 sm:p-6 rounded-lg text-center shadow-sm border border-purple-200 card-hover col-span-2 lg:col-span-1">
+                    <div class="text-3xl sm:text-4xl font-bold text-purple-600">3.5x</div>
+                    <div class="text-xs sm:text-sm mt-2 text-gray-700">Mayor riesgo<br>de repitencia</div>
                 </div>
             </div>
         </div>
@@ -502,55 +571,55 @@
 
     <!-- SECCIÓN AGRADECIMIENTOS -->
     <section class="content-section bg-white">
-        <div class="max-w-6xl mx-auto px-6 py-20">
-            <!-- Título de Sección -->
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <!-- Título -->
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-3 sm:mb-4">
                 Agradecimientos
             </h2>
-            <p class="text-center text-gray-600 mb-12">
+            <p class="text-center text-gray-600 mb-8 sm:mb-12 text-sm sm:text-base">
                 A los docentes que guiaron este proyecto de investigación
             </p>
             
             <!-- Contenedor de agradecimientos -->
             <div class="max-w-4xl mx-auto">
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-8 shadow-lg border border-blue-200">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 sm:p-8 shadow-lg border border-blue-200 card-hover">
                     <div class="text-center mb-6">
-                        <div class="text-5xl mb-4">🎓</div>
-                        <p class="text-gray-700 leading-relaxed text-lg mb-6">
+                        <div class="text-4xl sm:text-5xl mb-4">🎓</div>
+                        <p class="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg mb-6">
                             Agradecemos profundamente a los docentes que orientaron y apoyaron el desarrollo 
                             de este proyecto de investigación académica:
                         </p>
                     </div>
                     
                     <!-- Grid de docentes -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
                         <!-- Docente 1 -->
-                        <div class="bg-white rounded-lg p-6 shadow-sm text-center border border-blue-200 hover:shadow-md transition-shadow">
-                            <div class="text-3xl mb-3">👨‍🏫</div>
-                            <h3 class="font-bold text-gray-800 mb-1">Claudia Rocío</h3>
-                            <h3 class="font-bold text-gray-800 mb-2">Chia Argote</h3>
-                            <p class="text-sm text-blue-600">Docente</p>
+                        <div class="bg-white rounded-lg p-4 sm:p-6 shadow-sm text-center border border-blue-200 card-hover">
+                            <div class="text-2xl sm:text-3xl mb-3">👨‍🏫</div>
+                            <h3 class="font-bold text-gray-800 mb-1 text-sm sm:text-base">Claudia Rocío</h3>
+                            <h3 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">Chia Argote</h3>
+                            <p class="text-xs sm:text-sm text-blue-600">Docente</p>
                         </div>
                         
                         <!-- Docente 2 -->
-                        <div class="bg-white rounded-lg p-6 shadow-sm text-center border border-blue-200 hover:shadow-md transition-shadow">
-                            <div class="text-3xl mb-3">👩‍🏫</div>
-                            <h3 class="font-bold text-gray-800 mb-1">Diana Gabriela</h3>
-                            <h3 class="font-bold text-gray-800 mb-2">Vega Galvis</h3>
-                            <p class="text-sm text-blue-600">Docente</p>
+                        <div class="bg-white rounded-lg p-4 sm:p-6 shadow-sm text-center border border-blue-200 card-hover">
+                            <div class="text-2xl sm:text-3xl mb-3">👩‍🏫</div>
+                            <h3 class="font-bold text-gray-800 mb-1 text-sm sm:text-base">Diana Gabriela</h3>
+                            <h3 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">Vega Galvis</h3>
+                            <p class="text-xs sm:text-sm text-blue-600">Docente</p>
                         </div>
                         
                         <!-- Docente 3 -->
-                        <div class="bg-white rounded-lg p-6 shadow-sm text-center border border-blue-200 hover:shadow-md transition-shadow">
-                            <div class="text-3xl mb-3">👩‍💻</div>
-                            <h3 class="font-bold text-gray-800 mb-1">Glenia</h3>
-                            <h3 class="font-bold text-gray-800 mb-2">Pacheco Laguado</h3>
-                            <p class="text-sm text-blue-600">Docente TIC</p>
+                        <div class="bg-white rounded-lg p-4 sm:p-6 shadow-sm text-center border border-blue-200 card-hover">
+                            <div class="text-2xl sm:text-3xl mb-3">👩‍💻</div>
+                            <h3 class="font-bold text-gray-800 mb-1 text-sm sm:text-base">Glenia</h3>
+                            <h3 class="font-bold text-gray-800 mb-2 text-sm sm:text-base">Pacheco Laguado</h3>
+                            <p class="text-xs sm:text-sm text-blue-600">Docente TIC</p>
                         </div>
                     </div>
                     
-                    <div class="text-center mt-8">
-                        <p class="text-gray-600 italic">
+                    <div class="text-center mt-6 sm:mt-8">
+                        <p class="text-gray-600 italic text-xs sm:text-sm">
                             Su guía y apoyo fueron fundamentales para el desarrollo de esta investigación
                         </p>
                     </div>
@@ -561,23 +630,23 @@
 
     <!-- SECCIÓN REFERENCIAS BIBLIOGRÁFICAS -->
     <section id="bibliografia" class="content-section bg-gray-50">
-        <div class="max-w-6xl mx-auto px-6 py-20">
-            <!-- Título de Sección -->
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <!-- Título -->
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-3 sm:mb-4">
                 Referencias Bibliográficas
             </h2>
-            <p class="text-center text-gray-600 mb-16">
+            <p class="text-center text-gray-600 mb-10 sm:mb-16 text-sm sm:text-base">
                 Fuentes consultadas para el proyecto
             </p>
             
             <!-- Lista de Referencias -->
-            <div class="space-y-4 max-w-5xl mx-auto">
+            <div class="space-y-3 sm:space-y-4 max-w-5xl mx-auto">
                 <!-- Referencia 1 -->
-                <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex gap-4">
-                        <div class="font-bold text-blue-600 text-lg">[1]</div>
+                <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex gap-3 sm:gap-4">
+                        <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[1]</div>
                         <div>
-                            <p class="text-gray-800 leading-relaxed">
+                            <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                 <strong>Maslach C, Jackson SE.</strong> The measurement of experienced burnout. <em>J Occup Behav.</em> 1981;2(2):99–113.
                             </p>
                         </div>
@@ -585,11 +654,11 @@
                 </div>
                 
                 <!-- Referencia 2 -->
-                <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex gap-4">
-                        <div class="font-bold text-blue-600 text-lg">[2]</div>
+                <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex gap-3 sm:gap-4">
+                        <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[2]</div>
                         <div>
-                            <p class="text-gray-800 leading-relaxed">
+                            <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                 <strong>Lachiner Saborío M, Hidalgo Murillo LF.</strong> Síndrome de Burnout. <em>Medicina Legal de Costa Rica (Ed. virtual).</em> 2015;32(1).
                             </p>
                         </div>
@@ -597,11 +666,11 @@
                 </div>
                 
                 <!-- Referencia 3 -->
-                <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex gap-4">
-                        <div class="font-bold text-blue-600 text-lg">[3]</div>
+                <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex gap-3 sm:gap-4">
+                        <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[3]</div>
                         <div>
-                            <p class="text-gray-800 leading-relaxed">
+                            <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                 <strong>Schaufeli WB, Salanova M.</strong> Burnout and engagement in university students: the MBI-SS and its psychometric properties. <em>Rev Psicol Educ.</em>
                             </p>
                         </div>
@@ -609,11 +678,11 @@
                 </div>
                 
                 <!-- Referencia 4 -->
-                <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex gap-4">
-                        <div class="font-bold text-blue-600 text-lg">[4]</div>
+                <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex gap-3 sm:gap-4">
+                        <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[4]</div>
                         <div>
-                            <p class="text-gray-800 leading-relaxed">
+                            <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                 <strong>Rotenstein LS, Ramos MA, Torre M, et al.</strong> Prevalence of depression, depressive symptoms, and suicidal ideation among medical students: a systematic review and meta-analysis. <em>JAMA.</em> 2016;316(21):2214–2236.
                             </p>
                         </div>
@@ -621,25 +690,25 @@
                 </div>
                 
                 <!-- Referencia 5 -->
-                <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex gap-4">
-                        <div class="font-bold text-blue-600 text-lg">[5]</div>
+                <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex gap-3 sm:gap-4">
+                        <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[5]</div>
                         <div>
-                            <p class="text-gray-800 leading-relaxed">
+                            <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                 <strong>Carrard V, Bourquin C, Berney S, et al.</strong> Comparison of mental health and burnout between medical and nonmedical students. <em>PLoS One.</em> 2023;20(10):e0328145.
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Contenedor colapsable para referencias 6-14 -->
-                <div id="referenciasOcultas" class="referencias-ocultas space-y-4">
+                <!-- Contenedor colapsable -->
+                <div id="referenciasOcultas" class="referencias-ocultas space-y-3 sm:space-y-4">
                     <!-- Referencia 6 -->
-                    <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-400">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-600 text-lg">[6]</div>
+                    <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-400">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[6]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Vásquez-Torres J, Alvarado GF.</strong> Calidad de sueño y síndrome de burnout - Universidad Cayetano Heredia, Perú
                                 </p>
                             </div>
@@ -647,11 +716,11 @@
                     </div>
                     
                     <!-- Referencia 7 -->
-                    <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-400">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-600 text-lg">[7]</div>
+                    <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-400">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[7]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Ortiz L, Gómez A.</strong> Factores asociados al síndrome de burnout - Universidad Nacional Autónoma de México
                                 </p>
                             </div>
@@ -659,11 +728,11 @@
                     </div>
                     
                     <!-- Referencia 8 -->
-                    <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-600 text-lg">[8]</div>
+                    <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[8]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Pérez CA, Medina O.</strong> Prevalencia del síndrome de burnout - Universidad Central del Ecuador
                                 </p>
                             </div>
@@ -671,11 +740,11 @@
                     </div>
                     
                     <!-- Referencia 9 -->
-                    <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-600 text-lg">[9]</div>
+                    <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[9]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Merchán-Galvis AM, Albino-Matiz AY.</strong> Síndrome de Burnout y factores asociados - Universidad Nacional de Colombia
                                 </p>
                             </div>
@@ -683,11 +752,11 @@
                     </div>
                     
                     <!-- Referencia 10 -->
-                    <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-600 text-lg">[10]</div>
+                    <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[10]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Suárez-Cadavid PA, Ruiz-González LF.</strong> Burnout syndrome and empathy - Universidad CES, Medellín
                                 </p>
                             </div>
@@ -695,11 +764,11 @@
                     </div>
                     
                     <!-- Referencia 11 -->
-                    <div class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-600 text-lg">[11]</div>
+                    <div class="bg-white rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-600 text-base sm:text-lg flex-shrink-0">[11]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Arango-Agudelo GA, Castaño-Castrillón JJ.</strong> Síndrome de burnout y desempeño académico - Universidad de Manizales
                                 </p>
                             </div>
@@ -707,11 +776,11 @@
                     </div>
                     
                     <!-- Referencia 12 (UDES Cúcuta) -->
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-600">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-700 text-lg">[12]</div>
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-600">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-700 text-base sm:text-lg flex-shrink-0">[12]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Flórez-González D, Guevara-Pérez IP.</strong> Ansiedad en estudiantes de Medicina - UDES Cúcuta, 2023
                                 </p>
                             </div>
@@ -719,11 +788,11 @@
                     </div>
                     
                     <!-- Referencia 13 (UDES Cúcuta) -->
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-600">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-700 text-lg">[13]</div>
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-600">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-700 text-base sm:text-lg flex-shrink-0">[13]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Ibarguen-Pabón KV, Suárez-Chaparro ST.</strong> Salud mental y rendimiento académico - UDES Cúcuta, 2024
                                 </p>
                             </div>
@@ -731,11 +800,11 @@
                     </div>
                     
                     <!-- Referencia 14 (UDES Cúcuta) -->
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-600">
-                        <div class="flex gap-4">
-                            <div class="font-bold text-blue-700 text-lg">[14]</div>
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-600">
+                        <div class="flex gap-3 sm:gap-4">
+                            <div class="font-bold text-blue-700 text-base sm:text-lg flex-shrink-0">[14]</div>
                             <div>
-                                <p class="text-gray-800 leading-relaxed">
+                                <p class="text-gray-800 leading-relaxed text-xs sm:text-sm">
                                     <strong>Montes-Callejas R, Remolina-Lizcano TV.</strong> Insomnio y depresión en estudiantes - UDES Cúcuta, 2023
                                 </p>
                             </div>
@@ -744,14 +813,14 @@
                 </div>
                 
                 <!-- Botón Ver Más -->
-                <div class="text-center mt-8">
+                <div class="text-center mt-6 sm:mt-8">
                     <button 
                         id="btnVerMas" 
                         onclick="toggleReferencias()" 
-                        class="btn-ver-mas bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold shadow-lg hover:from-blue-600 hover:to-blue-700 flex items-center gap-3 mx-auto"
+                        class="btn-ver-mas bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold shadow-lg hover:from-blue-600 hover:to-blue-700 flex items-center gap-3 mx-auto text-sm sm:text-base"
                     >
                         <span id="textoBoton">Ver más referencias</span>
-                        <svg id="iconoFlecha" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="iconoFlecha" class="w-4 h-4 sm:w-5 sm:h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
@@ -759,50 +828,74 @@
             </div>
             
             <!-- Total de Referencias -->
-            <div class="text-center mt-12">
-                <div class="inline-block bg-blue-50 px-8 py-4 rounded-lg">
-                    <span class="text-2xl font-bold text-blue-600">14</span>
-                    <span class="text-gray-600 ml-2">Referencias Totales</span>
+            <div class="text-center mt-8 sm:mt-12">
+                <div class="inline-block bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-lg">
+                    <span class="text-xl sm:text-2xl font-bold text-blue-600">14</span>
+                    <span class="text-gray-600 ml-2 text-sm sm:text-base">Referencias Totales</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-12">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid grid-cols-3 gap-8 mb-8">
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-8 sm:py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
                 <div>
-                    <h4 class="font-bold mb-4 text-lg">Universidad de Santander</h4>
-                    <div class="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-                        <p class="text-sm text-gray-300 mb-2">📍 Sede Cúcuta</p>
-                        <p class="text-sm text-gray-300 mb-2">📞 Línea de contacto</p>
-                        <p class="text-sm text-gray-300">✉️ Email institucional</p>
+                    <h4 class="font-bold mb-4 text-base sm:text-lg">Universidad de Santander</h4>
+                    <div class="bg-gray-700/50 rounded-lg p-3 sm:p-4 border border-gray-600">
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2">📍 Sede Cúcuta</p>
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2">📞 Línea de contacto</p>
+                        <p class="text-xs sm:text-sm text-gray-300">✉️ Email institucional</p>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-4 text-lg">Facultad de Medicina</h4>
-                    <div class="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-                        <p class="text-sm text-gray-300 mb-2">🏥 Programa de Medicina</p>
-                        <p class="text-sm text-gray-300 mb-2">📚 6° Semestre</p>
-                        <p class="text-sm text-gray-300">👥 Investigación estudiantil</p>
+                    <h4 class="font-bold mb-4 text-base sm:text-lg">Facultad de Medicina</h4>
+                    <div class="bg-gray-700/50 rounded-lg p-3 sm:p-4 border border-gray-600">
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2">🏥 Programa de Medicina</p>
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2">📚 6° Semestre</p>
+                        <p class="text-xs sm:text-sm text-gray-300">👥 Investigación estudiantil</p>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-4 text-lg">Proyecto 2025</h4>
-                    <div class="bg-blue-900/30 rounded-lg p-4 border border-blue-700">
-                        <p class="text-sm text-blue-200 mb-2">📊 Proyecto de Aula</p>
-                        <p class="text-sm text-blue-200 mb-2">🔬 Investigación Académica</p>
-                        <p class="text-sm text-blue-200">📅 Año 2025</p>
+                    <h4 class="font-bold mb-4 text-base sm:text-lg">Proyecto 2025</h4>
+                    <div class="bg-blue-900/30 rounded-lg p-3 sm:p-4 border border-blue-700">
+                        <p class="text-xs sm:text-sm text-blue-200 mb-2">📊 Proyecto de Aula</p>
+                        <p class="text-xs sm:text-sm text-blue-200 mb-2">🔬 Investigación Académica</p>
+                        <p class="text-xs sm:text-sm text-blue-200">📅 Año 2025</p>
                     </div>
                 </div>
+            </div>
+            
+            <div class="text-center pt-6 border-t border-gray-700">
+                <p class="text-xs sm:text-sm text-gray-400">
+                    © 2025 Universidad de Santander - Todos los derechos reservados
+                </p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Toggle menu móvil
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        
+        // Cerrar menú al hacer click en un enlace
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.querySelector('.nav-links');
+                const hamburger = document.querySelector('.hamburger');
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
         // Highlight del nav activo según scroll
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -828,7 +921,7 @@
 
         // GRÁFICAS INTERACTIVAS
         Chart.defaults.font.family = 'system-ui';
-        Chart.defaults.font.size = 13;
+        Chart.defaults.font.size = window.innerWidth < 640 ? 11 : 13;
 
         // GRÁFICA 1: Prevalencia (Dona)
         const ctx1 = document.getElementById('prevalenciaChart').getContext('2d');
@@ -839,8 +932,8 @@
                 datasets: [{
                     data: [58, 42],
                     backgroundColor: [
-                        'rgba(239, 68, 68, 0.8)',  // Rojo
-                        'rgba(34, 197, 94, 0.8)'   // Verde
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(34, 197, 94, 0.8)'
                     ],
                     borderColor: [
                         'rgba(239, 68, 68, 1)',
@@ -851,16 +944,16 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 plugins: {
                     legend: {
                         position: 'bottom',
                         labels: {
                             font: {
-                                size: 14,
+                                size: window.innerWidth < 640 ? 11 : 14,
                                 weight: 'bold'
                             },
-                            padding: 20
+                            padding: window.innerWidth < 640 ? 10 : 20
                         }
                     },
                     tooltip: {
@@ -874,28 +967,28 @@
             }
         });
 
-        // GRÁFICA 2: Dimensiones del MBI-SS (Barras Horizontales)
+        // GRÁFICA 2: Dimensiones del MBI-SS
         const ctx2 = document.getElementById('dimensionesChart').getContext('2d');
         new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Agotamiento Emocional', 'Despersonalización', 'Baja Realización Personal'],
+                labels: ['Agotamiento Emocional', 'Despersonalización', 'Baja Realización'],
                 datasets: [{
                     label: 'Nivel Alto',
                     data: [68, 45, 52],
-                    backgroundColor: 'rgba(239, 68, 68, 0.8)',  // Rojo
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
                     borderColor: 'rgba(239, 68, 68, 1)',
                     borderWidth: 2
                 }, {
                     label: 'Nivel Medio',
                     data: [22, 35, 28],
-                    backgroundColor: 'rgba(251, 191, 36, 0.8)',  // Amarillo
+                    backgroundColor: 'rgba(251, 191, 36, 0.8)',
                     borderColor: 'rgba(251, 191, 36, 1)',
                     borderWidth: 2
                 }, {
                     label: 'Nivel Bajo',
                     data: [10, 20, 20],
-                    backgroundColor: 'rgba(34, 197, 94, 0.8)',  // Verde
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)',
                     borderColor: 'rgba(34, 197, 94, 1)',
                     borderWidth: 2
                 }]
@@ -903,11 +996,16 @@
             options: {
                 indexAxis: 'y',
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'top'
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: window.innerWidth < 640 ? 10 : 12
+                            }
+                        }
                     }
                 },
                 scales: {
@@ -915,19 +1013,27 @@
                         stacked: true,
                         max: 100,
                         ticks: {
+                            font: {
+                                size: window.innerWidth < 640 ? 9 : 11
+                            },
                             callback: function(value) {
                                 return value + '%';
                             }
                         }
                     },
                     y: {
-                        stacked: true
+                        stacked: true,
+                        ticks: {
+                            font: {
+                                size: window.innerWidth < 640 ? 9 : 11
+                            }
+                        }
                     }
                 }
             }
         });
 
-        // GRÁFICA 3: Relación con Repitencia (Barras agrupadas)
+        // GRÁFICA 3: Relación con Repitencia
         const ctx3 = document.getElementById('repitenciaChart').getContext('2d');
         new Chart(ctx3, {
             type: 'bar',
@@ -936,24 +1042,29 @@
                 datasets: [{
                     label: 'Repitieron al menos 1 materia',
                     data: [10, 35],
-                    backgroundColor: 'rgba(239, 68, 68, 0.8)',  // Rojo
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
                     borderColor: 'rgba(239, 68, 68, 1)',
                     borderWidth: 2
                 }, {
                     label: 'No repitieron materias',
                     data: [90, 65],
-                    backgroundColor: 'rgba(34, 197, 94, 0.8)',  // Verde
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)',
                     borderColor: 'rgba(34, 197, 94, 1)',
                     borderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'top'
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: window.innerWidth < 640 ? 10 : 12
+                            }
+                        }
                     }
                 },
                 scales: {
@@ -961,8 +1072,18 @@
                         beginAtZero: true,
                         max: 100,
                         ticks: {
+                            font: {
+                                size: window.innerWidth < 640 ? 9 : 11
+                            },
                             callback: function(value) {
                                 return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: window.innerWidth < 640 ? 9 : 11
                             }
                         }
                     }
@@ -970,20 +1091,17 @@
             }
         });
 
-        // Función para mostrar/ocultar referencias adicionales
+        // Función para mostrar/ocultar referencias
         function toggleReferencias() {
             const contenedor = document.getElementById('referenciasOcultas');
-            const boton = document.getElementById('btnVerMas');
             const textoBoton = document.getElementById('textoBoton');
             const iconoFlecha = document.getElementById('iconoFlecha');
             
             if (contenedor.classList.contains('mostrar')) {
-                // Ocultar referencias
                 contenedor.classList.remove('mostrar');
                 textoBoton.textContent = 'Ver más referencias';
                 iconoFlecha.classList.remove('rotate-180');
             } else {
-                // Mostrar referencias
                 contenedor.classList.add('mostrar');
                 textoBoton.textContent = 'Ver menos referencias';
                 iconoFlecha.classList.add('rotate-180');
